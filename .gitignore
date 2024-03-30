@@ -1,0 +1,38 @@
+# OS generated files #
+######################
+.DS_Store
+
+# Node.js generated files #
+###########################
+node_modules/
+
+# Compiled files #
+#################
+dist/
+build/
+*.log
+
+# Dependency directories #
+##########################
+bower_components/
+jspm_packages/
+
+# Compiled Webpack files #
+##########################
+webpack.config.js
+webpack.config.dev.js
+webpack.config.prod.js
+
+# IDE files #
+#############
+.idea/
+.vscode/
+
+# Cache and temp files #
+########################
+.cache/
+.temp/
+
+# Environment variables file #
+##############################
+.env
