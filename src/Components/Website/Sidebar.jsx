@@ -4,7 +4,7 @@ import { TiHome } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
-import { logoutAction } from "../../Reducers/user";
+import { login, logoutAction } from "../../Reducers/user";
 import { GoPlus } from "react-icons/go";
 import { MainContext } from "../../Context/Main";
 import Select from "react-select";
@@ -13,13 +13,23 @@ import { store } from "../../Store";
 
 const Sidebar = () => {
   const { user } = useSelector((store) => store.user);
-  const { songs, USER_URL, API_BASE_URL } = useContext(MainContext);
+  const {
+    songs,
+    USER_URL,
+    API_BASE_URL,
+    setCurrSong,
+    setCurrSongIndex,
+    setPause,
+    song,
+    index,
+  } = useContext(MainContext);
   const [logout, setLogout] = useState(false);
   const [create, setCreate] = useState(false);
   const dispatcher = useDispatch();
   const [playlistName, setPlaylistName] = useState("");
   const [selectedSongs, setSelectedSongs] = useState([]);
-  const [selSong, setSeleSong] = useState([]);
+  const [confirm, setConfirm] = useState(false);
+  const [id, setId] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +41,20 @@ const Sidebar = () => {
     };
     axios
       .put(API_BASE_URL + USER_URL + "create-playlist", data)
-      .then((success) => {})
+      .then((success) => {
+        dispatcher(login({ user: success.data.updatedClient, signup: false }));
+        setCreate(false);
+      })
+      .catch((err) => console.log(err));
+  };
+  const deletePlaylist = () => {
+    axios
+      .delete(API_BASE_URL + USER_URL + `delete-playlist/${user.email}/${id}`)
+      .then((success) => {
+        dispatcher(login({ user: success.data.updatedClient, signup: false }));
+        setConfirm(false);
+        setId(null);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -50,6 +73,9 @@ const Sidebar = () => {
               onClick={() => {
                 dispatcher(logoutAction());
                 setLogout(false);
+                setCurrSong(song);
+                setCurrSongIndex(index);
+                setPause(false);
               }}
               className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
             >
@@ -58,6 +84,37 @@ const Sidebar = () => {
             <button
               onClick={() => {
                 setLogout(false);
+              }}
+              className="bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        className={`w-full min-h-screen ${
+          confirm ? "flex" : "hidden"
+        } items-center justify-center fixed top-0 left-0 bg-gray-900 bg-opacity-50`}
+      >
+        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
+          <h2 className="text-2xl font-semibold mb-4">Delete Confirmation</h2>
+          <p className="text-gray-700 mb-6">
+            Are you sure you want to delete this playlist?
+          </p>
+          <div className="flex justify-between">
+            <button
+              onClick={() => {
+                deletePlaylist();
+              }}
+              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+            >
+              Yes, Delete
+            </button>
+            <button
+              onClick={() => {
+                setConfirm(false);
+                setId(null);
               }}
               className="bg-gray-300 text-gray-800 py-2 px-4 rounded hover:bg-gray-400"
             >
@@ -119,6 +176,7 @@ const Sidebar = () => {
                 onClick={() => {
                   setCreate(false);
                 }}
+                type="button"
                 className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
               >
                 Close
@@ -177,6 +235,45 @@ const Sidebar = () => {
                 <GoPlus className="text-xl text-white group-hover:text-red-500 duration-100" />
               </Link>
             </li>
+            {user &&
+              user.createdPlaylist.map((p, i) => {
+                return (
+                  <li
+                    className="mb-2 rounded-lg hover:bg-gray-800 hover:text-white flex items-center"
+                    onClick={() => {}}
+                    key={i}
+                  >
+                    <Link
+                      to={user ? `/playlist/${p._id}` : "/login"}
+                      className="flex items-center justify-between cursor-pointer gap-3 px-4 py-2 text-gray-400 group w-[90%]"
+                    >
+                      <span className="text-lg text-white">{p.name}</span>
+                      <span className="text-md flex gap-2 items-center">
+                        Playlist
+                      </span>
+                    </Link>
+
+                    <svg
+                      className="cursor-pointer hover:text-red-500 duration-100"
+                      onClick={() => {
+                        setConfirm(true);
+                        setId(p._id);
+                      }}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="18"
+                      height="18"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                  </li>
+                );
+              })}
             <li className="px-2 flex gap-4">
               {user ? (
                 <div

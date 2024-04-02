@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
 import { MainContext } from "../../Context/Main";
 import { useSelector, useDispatch } from "react-redux";
@@ -85,12 +85,12 @@ function Login(props) {
             >
               Login
             </button>
-            {/* <a
+            <Link
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="#"
+              to="/signup"
             >
-              Forgot Password?
-            </a> */}
+              Do Not Have An Account Yet?
+            </Link>
           </div>
         </form>
       </div>

@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { lsToState } from "./Reducers/user";
 import Login from "./Pages/Website/Login";
 import Favorite from "./Pages/Website/Favorite";
+import PlaylistWeb from "./Pages/Website/Playlist";
 const routes = createBrowserRouter([
   {
     path: "",
@@ -34,6 +35,11 @@ const routes = createBrowserRouter([
       {
         path: "/fav",
         element: <Favorite />,
+      },
+      ,
+      {
+        path: "/playlist/:id",
+        element: <PlaylistWeb />,
       },
     ],
   },

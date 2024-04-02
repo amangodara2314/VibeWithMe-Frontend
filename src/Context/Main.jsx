@@ -107,7 +107,6 @@ function Main(props) {
   };
 
   const searchSongs = (query) => {
-    console.log(query);
     axios
       .get(API_BASE_URL + SONG_URL + "/search/" + query)
       .then((success) => {
@@ -154,6 +153,7 @@ function Main(props) {
         setErr,
         err,
         USER_URL,
+        dispatcher,
       }}
     >
       {props.children}
