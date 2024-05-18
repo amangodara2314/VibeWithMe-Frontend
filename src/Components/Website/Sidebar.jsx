@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { MdOutlineFavorite } from "react-icons/md";
 import { TiHome } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import { login, logoutAction } from "../../Reducers/user";
 import { GoPlus } from "react-icons/go";
@@ -30,7 +30,7 @@ const Sidebar = () => {
   const [selectedSongs, setSelectedSongs] = useState([]);
   const [confirm, setConfirm] = useState(false);
   const [id, setId] = useState(null);
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const filtered = selectedSongs.map((s) => s.value);
@@ -52,6 +52,7 @@ const Sidebar = () => {
       .delete(API_BASE_URL + USER_URL + `delete-playlist/${user.email}/${id}`)
       .then((success) => {
         dispatcher(login({ user: success.data.updatedClient, signup: false }));
+        navigate("/");
         setConfirm(false);
         setId(null);
       })

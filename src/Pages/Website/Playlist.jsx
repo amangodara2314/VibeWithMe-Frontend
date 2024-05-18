@@ -49,9 +49,12 @@ function PlaylistWeb(props) {
       return;
     }
     let song = user.createdPlaylist.filter((p) => p._id == id);
+    if (!song || !song.songs) {
+      return;
+    }
     setPlaylistSongs(song[0]);
     setArtistSongs(song[0].songs);
-  }, [id, user]);
+  }, [id, user.createdPlaylist]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

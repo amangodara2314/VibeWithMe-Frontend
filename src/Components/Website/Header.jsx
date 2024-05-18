@@ -182,7 +182,7 @@ function Header(props) {
                 </div>
               </li>
               {user &&
-                user.createdPlaylist.map((p, i) => {
+                user?.createdPlaylist?.map((p, i) => {
                   return (
                     <li
                       className="mb-4 rounded-lg hover:bg-gray-700 hover:text-white flex items-center"
