@@ -57,7 +57,7 @@ function SongsListing(props) {
                     />
                     <span className="">{song.name}</span>
                   </div>
-                  <div className="text-gray-400 text-left">{artist}</div>
+                  {/* <div className="text-gray-400 text-left">{artist}</div> */}
                 </div>
                 {checkFavSong(song)}
               </div>

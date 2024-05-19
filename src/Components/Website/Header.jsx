@@ -124,9 +124,9 @@ function Header(props) {
       <div
         className={`fixed top-0 ${
           toggle ? "left-0" : "left-[100%]"
-        } duration-500 min-w-full min-h-screen bg-opacity-50 backdrop-filter backdrop-blur-md text-black`}
+        } duration-500 w-full h-screen bg-opacity-50 backdrop-filter bg-[#121212] backdrop-blur-md text-black z-50`}
       >
-        <div className="flex flex-col min-h-screen gap-5 bg-gradient-to-r from-[#212121] to-[#121212] text-white">
+        <div className="flex flex-col h-[84%] text-white">
           {/* Sidebar Header */}
           <div className="p-4 text-center">
             <div className="text-3xl font-semibold">
@@ -135,33 +135,19 @@ function Header(props) {
           </div>
 
           {/* Sidebar Content */}
-          <div className="overflow-y-auto">
-            <ul className="p-2">
-              <li className="mb-4">
-                <Link
-                  to="/"
-                  className="flex items-center px-4 py-2 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white"
-                  onClick={() => {
-                    setToggle(false);
-                  }}
-                >
-                  <TiHome className="text-xl text-blue-500 duration-100" />
-                  <span className="text-lg font-bold ml-2">Home</span>
-                </Link>
-              </li>
-              <li className="mb-4">
-                <Link
-                  to={user ? "/fav" : "/login"}
-                  className="flex items-center px-4 py-2 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white"
-                  onClick={() => {
-                    setToggle(false);
-                  }}
-                >
-                  <MdOutlineFavorite className="text-xl text-red-500 duration-100" />
-                  <span className="text-lg font-bold ml-2">Favorites</span>
-                </Link>
-              </li>
-              <li className="mb-4">
+          <div className="flex-1 overflow-y-auto">
+            <ul className="p-2 space-y-4">
+              <SidebarLink
+                to="/"
+                label="Home"
+                onClick={() => setToggle(false)}
+              />
+              <SidebarLink
+                to={user ? "/fav" : "/login"}
+                label="Favorites"
+                onClick={() => setToggle(false)}
+              />
+              <li className="rounded-lg cursor-pointer">
                 <div
                   onClick={() => {
                     if (user) {
@@ -173,80 +159,67 @@ function Header(props) {
                       navigator("/login");
                     }
                   }}
-                  className="flex items-center px-4 py-2 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white cursor-pointer"
+                  className="px-4 py-2 text-white font-semibold"
                 >
-                  <span className="text-lg font-semibold mr-2">
-                    Create Playlist
-                  </span>
-                  <GoPlus className="text-xl text-white duration-100" />
+                  Create Playlist
                 </div>
               </li>
               {user &&
-                user?.createdPlaylist?.map((p, i) => {
-                  return (
-                    <li
-                      className="mb-4 rounded-lg hover:bg-gray-700 hover:text-white flex items-center"
-                      onClick={() => {
-                        setToggle(false);
-                      }}
-                      key={i}
-                    >
-                      <Link
-                        to={user ? `/playlist/${p._id}` : "/login"}
-                        className="flex items-center justify-between cursor-pointer px-4 py-2 text-gray-400 w-full"
-                      >
-                        <span className="text-lg">{p.name}</span>
-                        <span className="text-md flex items-center">
-                          <BsMusicNoteBeamed className="text-xl text-gray-500" />
-                          <span className="ml-2">Playlist</span>
-                        </span>
-                      </Link>
-
-                      <IoMdCloseCircleOutline
-                        className="text-xl text-gray-500 cursor-pointer duration-100 hover:text-red-500"
-                        onClick={() => {
-                          setId(p._id);
-                        }}
-                      />
-                    </li>
-                  );
-                })}
-              <li className="px-2">
-                {user ? (
-                  <div
-                    onClick={() => {
-                      dispatcher(logoutAction());
-                    }}
-                    className="flex items-center px-4 py-2 text-gray-400 rounded-lg hover:bg-gray-700 hover:text-white cursor-pointer"
+                user.createdPlaylist?.map((p, i) => (
+                  <li
+                    className="flex items-center justify-between rounded-lg px-4 py-2 cursor-pointe text-white"
+                    key={i}
                   >
-                    <span className="text-lg font-bold mr-2">Logout</span>
-                    <IoIosLogOut className="text-xl" />
-                  </div>
-                ) : (
-                  <div className="flex justify-center gap-2 w-full flex-wrap">
-                    <Link to="/login">
-                      <button className="bg-white hover:bg-gray-300 duration-200 text-black font-bold py-2 px-4 rounded-2xl">
-                        Login
-                      </button>
+                    <Link
+                      to={`/playlist/${p._id}`}
+                      className="flex-1"
+                      onClick={() => setToggle(false)}
+                    >
+                      <span>{p.name}</span>
+                      <span className="ml-2">( Playlist )</span>
                     </Link>
-                    <Link to="/signup">
-                      <button className="bg-white hover:bg-gray-300 duration-200 text-black font-bold py-2 px-4 rounded-2xl">
-                        Signup
-                      </button>
-                    </Link>
-                  </div>
-                )}
-              </li>
-              {/* Add more sidebar items as needed */}
+                    <IoMdCloseCircleOutline
+                      className="ml-4 text-2xl text-red-500 hover:text-red-500"
+                      onClick={() => setId(p._id)}
+                    />
+                  </li>
+                ))}
             </ul>
           </div>
-          <div className="mx-auto">
-            <IoMdClose
-              className="text-4xl text-red-500 cursor-pointer duration-100 hover:text-white"
-              onClick={() => {
-                setToggle(false);
-              }}
-            />
+
+          {/* Login/Signup and Close Button */}
+          <div className="p-4 text-center space-y-4">
+            <div>
+              {user ? (
+                <div
+                  onClick={() => dispatcher(logoutAction())}
+                  className="flex items-center justify-center bg-red-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg w-full"
+                >
+                  <span className="font-bold">Logout</span>
+                </div>
+              ) : (
+                <div className="flex flex-col space-y-2">
+                  <Link to="/login">
+                    <button className="bg-blue-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg w-full">
+                      Login
+                    </button>
+                  </Link>
+                  <Link to="/signup">
+                    <button className="bg-green-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg w-full">
+                      Signup
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
+            <div>
+              <button
+                onClick={() => setToggle(false)}
+                className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 mt-2 px-4 rounded-lg w-full"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -264,7 +237,7 @@ function Header(props) {
               searchSongs(e.target.value);
               navigate("/search");
             }}
-            className="bg-[#242424] px-4 py-2 rounded-full text-white md:w-72"
+            className="bg-[#242424] px-4 py-2 rounded-full text-white w-72 md:w-82"
             placeholder="Search"
           />
         </div>
@@ -276,12 +249,24 @@ function Header(props) {
             onClick={() => {
               setToggle(true);
             }}
-            className="md:hidden block text-blue-400 "
+            className="md:hidden block text-white"
           />
         </div>
       </div>
     </>
   );
 }
+
+const SidebarLink = ({ to, label, onClick }) => (
+  <li className="rounded-lg cursor-pointer">
+    <Link
+      to={to}
+      className="block px-4 py-2 font-semibold text-white"
+      onClick={onClick}
+    >
+      {label}
+    </Link>
+  </li>
+);
 
 export default Header;

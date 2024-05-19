@@ -237,7 +237,7 @@ const Sidebar = () => {
               </Link>
             </li>
             {user &&
-              user.createdPlaylist.map((p, i) => {
+              user?.createdPlaylist?.map((p, i) => {
                 return (
                   <li
                     className="mb-2 rounded-lg hover:bg-gray-800 hover:text-white flex items-center"

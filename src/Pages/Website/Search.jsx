@@ -40,7 +40,7 @@ function Search(props) {
                   />
                   <span className="">{song.name}</span>
                 </div>
-                <div className="text-gray-400">{song.artist}</div>
+                {/* <div className="text-gray-400">{song.artist}</div> */}
               </div>
             );
           })

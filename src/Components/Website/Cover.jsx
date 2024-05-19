@@ -10,12 +10,12 @@ function Cover({ artist }) {
       onClick={() => {
         navigater("/songs/" + artist.name);
       }}
-      className="flex flex-col gap-2 items-center group w-56 h-[255px] hover:bg-[#212121] py-4 rounded cursor-pointer"
+      className="flex flex-col gap-2 items-center group w-full max-w-xs sm:max-w-[150px] py-4 rounded cursor-pointer"
     >
-      <div className="w-48 h-48 rounded overflow-hidden duration-300">
+      <div className="w-full aspect-w-1 aspect-h-1 rounded overflow-hidden duration-300">
         <img
           src={API_BASE_URL + artistCoverUrl + artist.cover}
-          className="w-full h-full duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover duration-300 group-hover:scale-105"
           alt=""
         />
       </div>

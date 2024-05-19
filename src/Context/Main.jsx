@@ -110,7 +110,6 @@ function Main(props) {
     axios
       .get(API_BASE_URL + SONG_URL + "/search/" + query)
       .then((success) => {
-        console.log(success.data);
         if (success.data.data.length != undefined) {
           setSearchedSongs(success.data.data);
         }

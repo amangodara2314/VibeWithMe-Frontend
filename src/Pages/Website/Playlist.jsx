@@ -49,12 +49,16 @@ function PlaylistWeb(props) {
       return;
     }
     let song = user.createdPlaylist.filter((p) => p._id == id);
-    if (!song || !song.songs) {
+
+    if (!song || !song[0].songs) {
+      console.log("out");
       return;
+    } else {
+      console.log("in");
+      setPlaylistSongs(song[0]);
+      setArtistSongs(song[0].songs);
     }
-    setPlaylistSongs(song[0]);
-    setArtistSongs(song[0].songs);
-  }, [id, user.createdPlaylist]);
+  }, [id, user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -86,7 +90,7 @@ function PlaylistWeb(props) {
         } items-center justify-center fixed top-0 left-0 bg-gray-900 bg-opacity-50`}
       >
         <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full md:max-w-lg">
-          <h2 className="text-2xl font-semibold mb-4">Create Playlist</h2>
+          <h2 className="text-2xl font-semibold mb-4">Add Songs</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
@@ -166,7 +170,7 @@ function PlaylistWeb(props) {
                       />
                       <span className="">{song.name}</span>
                     </div>
-                    <div className="text-gray-400">{song.artist}</div>
+                    {/* <div className="text-gray-400">{song.artist}</div> */}
                   </div>
                   <div
                     onClick={() => {
