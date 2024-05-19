@@ -61,7 +61,7 @@ function Main(props) {
     if (!user) {
       return;
     }
-    let check = fav.map((s) => s._id);
+    let check = fav?.map((s) => s._id);
     if (check.includes(song._id)) {
       return (
         <div
