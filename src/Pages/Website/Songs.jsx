@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { MainContext } from "../../Context/Main";
 
 import { useParams } from "react-router-dom";
@@ -19,8 +19,8 @@ function SongsListing(props) {
     checkFavSong,
   } = useContext(MainContext);
   const { artist } = useParams();
-  useEffect(() => {
-    let tempsongs = songs.filter((song) => song.artist == artist);
+  useLayoutEffect(() => {
+    let tempsongs = songs?.filter((song) => song.artist == artist);
     setArtistSongs(tempsongs);
   }, [songs]);
 
@@ -35,7 +35,14 @@ function SongsListing(props) {
         {err.msg}
       </div>
       <div className="flex flex-col gap-2 items-center mt-4">
-        {artistSongs &&
+        {!artistSongs ? (
+          <div className="flex space-x-2 w-full justify-center items-center h-full">
+            <span className="sr-only">Loading...</span>
+            <div className="h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.3s]" />
+            <div className="h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.15s]" />
+            <div className="h-8 w-8 bg-white rounded-full animate-bounce" />
+          </div>
+        ) : (
           artistSongs.map((song, index) => {
             return (
               <div className="flex w-full items-center hover:bg-[#212121] px-1 md:px-4 py-2 gap-2 duration-150 rounded cursor-pointer">
@@ -62,7 +69,8 @@ function SongsListing(props) {
                 {checkFavSong(song)}
               </div>
             );
-          })}
+          })
+        )}
       </div>
     </div>
   );

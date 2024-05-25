@@ -62,7 +62,7 @@ function Main(props) {
       return;
     }
     let check = fav?.map((s) => s._id);
-    if (check.includes(song._id)) {
+    if (check?.includes(song._id)) {
       return (
         <div
           onClick={() => {
@@ -72,7 +72,7 @@ function Main(props) {
               flag: false,
             });
           }}
-          className="text-red-500 text-left text-xl"
+          className="text-red-500 text-left text-2xl mr-2"
         >
           <IoIosHeart />
         </div>
@@ -87,7 +87,7 @@ function Main(props) {
               flag: true,
             });
           }}
-          className="text-black-400 text-left text-xl"
+          className="text-black-400 text-left text-2xl mr-2"
         >
           <IoMdHeartEmpty />
         </div>

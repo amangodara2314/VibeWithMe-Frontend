@@ -53,7 +53,7 @@ function Favorite(props) {
                     />
                     <span className="">{song.name}</span>
                   </div>
-                  <div className="text-gray-400 text-left">{song.artist}</div>
+                  {/* <div className="text-gray-400 text-left">{song.artist}</div> */}
                 </div>
                 {user != null ? checkFavSong(song) : ""}
               </div>

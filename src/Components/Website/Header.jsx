@@ -224,7 +224,7 @@ function Header(props) {
         </div>
       </div>
 
-      <div className="w-full px-2 md:px-10 py-4 flex justify-between bg-[#121212] rounded items-center">
+      <div className="w-full px-2 md:px-10 py-4 flex justify-between bg-[#121212] rounded items-center flex-wrap gap-2">
         <div className="">
           <input
             type="text"
@@ -237,7 +237,7 @@ function Header(props) {
               searchSongs(e.target.value);
               navigate("/search");
             }}
-            className="bg-[#242424] px-4 py-2 rounded-full text-white w-72 md:w-82"
+            className="bg-[#242424] px-4 py-2 rounded-full text-white w-56 md:w-82"
             placeholder="Search"
           />
         </div>

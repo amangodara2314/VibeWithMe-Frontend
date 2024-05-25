@@ -12,12 +12,21 @@ function Home(props) {
     songUrl,
     fetchSongs,
   } = useContext(MainContext);
+
   return (
-    <div className="bg-[#121212] w-full text-white justify-center sm:justify-start px-1 sm:px-8 pt-4 pb-28 rounded h-full flex flex-wrap gap-y-0 sm:gap-x-4 lg:gap-x-6">
-      {artist &&
+    <div className="bg-[#121212] w-full text-white flex flex-wrap justify-center sm:justify-start px-4 sm:px-8 pt-4 pb-28 rounded h-[90%] gap-y-4 sm:gap-y-0 sm:gap-x-4 lg:gap-x-6">
+      {!artist ? (
+        <div className="flex space-x-2 w-full justify-center items-center h-full">
+          <span className="sr-only">Loading...</span>
+          <div className="h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.3s]" />
+          <div className="h-8 w-8 bg-white rounded-full animate-bounce [animation-delay:-0.15s]" />
+          <div className="h-8 w-8 bg-white rounded-full animate-bounce" />
+        </div>
+      ) : (
         artist.map((a, index) => {
           return <Cover key={index} artist={a} />;
-        })}
+        })
+      )}
     </div>
   );
 }
