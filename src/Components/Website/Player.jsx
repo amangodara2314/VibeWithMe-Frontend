@@ -120,7 +120,7 @@ function Player(props) {
                 <div className="flex justify-center">
                   <img
                     src={API_BASE_URL + coverUrl + currSong.cover}
-                    className={`h-[50px] min-w-[50px] ${
+                    className={`${
                       isExpanded
                         ? "h-[300px] w-[300px] sm:h-[200px] sm:w-[200px] mb-4"
                         : ""
