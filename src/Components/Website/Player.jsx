@@ -123,7 +123,7 @@ function Player(props) {
                     className={`${
                       isExpanded
                         ? "h-[300px] w-[300px] sm:h-[200px] sm:w-[200px] mb-4"
-                        : ""
+                        : "h-[80px] w-[80px]"
                     } transition-all duration-300`}
                     alt=""
                   />

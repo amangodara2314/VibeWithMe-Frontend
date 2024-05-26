@@ -151,7 +151,7 @@ function PlaylistWeb(props) {
           ) : (
             playlistSongs.songs.map((song, index) => {
               return (
-                <div className="px-4 flex items-center w-[90%] hover:bg-[#212121] duration-150 rounded gap-2">
+                <div className="px-4 flex items-center w-[90%] hover:bg-[#212121] duration-150 rounded gap-2 h-[60px]">
                   <div
                     key={index}
                     onClick={() => {

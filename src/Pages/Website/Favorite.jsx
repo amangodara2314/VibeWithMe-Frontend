@@ -42,7 +42,7 @@ function Favorite(props) {
                     setCurrSongIndex(index);
                     setPause(false);
                   }}
-                  className="gap-2 duration-150 rounded w-full cursor-pointer flex justify-between items-center"
+                  className="gap-2 duration-150 rounded w-full cursor-pointer flex justify-between items-center h-[60px]"
                 >
                   <div className="flex items-center w-[80%]">
                     <img
